@@ -1,61 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import PostList from './Components/PostList';
-import Header from './Components/Header';
-import { Link } from 'react-router';
+import { MDXProvider } from '@mdx-js/react'
+import CSLN from '../MD/CSLN.mdx'
+import { Link } from 'react-router'
 
-export default function Home() {
-    const [posts, setPosts] = useState([]);
-    const [showMorePosts, setShowMorePosts] = useState(false);
+const components = {
+    h1: (props) => <h1 className="text-4xl font-bold text-pink-600" {...props} />,
+    p: (props) => <p className="my-6 leading-relaxed" {...props} />, // example for spacing
+    a: (props) => <a className="text-blue-600 hover:underline" {...props} />,
+    img: (props) => <img className="my-4 rounded-lg shadow-lg" {...props} />,
+    blockquote: (props) => <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4" {...props} />,
+    ul: (props) => <ul className="list-disc list-inside my-4" {...props} />,
+    ol: (props) => <ol className="list-decimal list-inside my-4" {...props} />,
+    li: (props) => <li className="my-2" {...props} />,
+}
 
-    useEffect(() => {
-        // Fetch or initialize your posts data here
-        const initialPosts = [
-            { id: 1, title: '[Ex] The Last Echo of Aetheria' },
-            { id: 2, title: '[Ex] The Clockmaker’s Promise' },
-            { id: 3, title: '[Ex] Coffee Stains & Late Nights' },
-        ];
-        setPosts(initialPosts);
-    }, []);
-
-
-    const addMorePosts = () => {
-        if (showMorePosts) {
-            // Add more posts here, for example, fetching from an API
-            const newPosts = [
-                { id: posts.length + 1, title: 'New Post 1' },
-                { id: posts.length + 2, title: 'New Post 2' },
-            ];
-            setPosts((prevPosts) => [...prevPosts, ...newPosts]);
-            setShowMorePosts(false);
-        }
-    };
-
+function Post3() {
     return (
-        <div className="h-screen w-screen" >
-            <Header id="section1" />
-            <div>
-                <div className="navbar bg-base-200 shadow-sm sticky top-0 z-10">
-                    <div className="navbar-start">
-                    </div>
-                    <div className="navbar-center">
-                        <Link to="/" className="btn btn-ghost text-xl">Storybook</Link>
-                    </div>
-                    <div className="navbar-end">
-                        <button className="btn btn-ghost btn-circle">
-                            <label className="toggle text-base-content">
-                                <input type="checkbox" value="forest" className="theme-controller" />
-                                <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></g></svg>
-                                <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></g></svg>
-                            </label>
-                        </button>
-
-                    </div>
+        <>
+            <div className="navbar bg-base-200 shadow-sm sticky top-0 z-10">
+                <div className="navbar-start">
                 </div>
-                <div className='container card mx-auto mt-4 p-4 min-h-screen'>
-                    <div className="card bg-base-200 card-md shadow-md min-h-screen">
-                        <div className="card-body">
-                            <h2 className="card-title text-3xl font-bold">Available Posts</h2>
-                            <PostList posts={posts} />
+                <div className="navbar-center">
+                    <Link to="/" className="btn btn-ghost text-xl">Storybook</Link>
+                </div>
+                <div className="navbar-end">
+                    <button className="btn btn-ghost btn-circle">
+                        <label className="toggle text-base-content">
+                            <input type="checkbox" value="forest" className="theme-controller" />
+                            <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></g></svg>
+                            <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></g></svg>
+                        </label>
+                    </button>
+
+                </div>
+            </div>
+            <div className="min-h-screen bg-base-100 mx-21 my-16">
+                <div className="card bg-base-200 min-h-screen">
+                    <div className="card-body text-lg">
+                        <div className="prose prose-xl max-w-none">
+                            <MDXProvider components={components}>
+                                <CSLN />
+                            </MDXProvider>
                         </div>
                     </div>
                 </div>
@@ -108,6 +92,8 @@ export default function Home() {
                     <p>Copyright © {new Date().getFullYear()} - All rights reserved by Firz</p>
                 </aside>
             </footer>
-        </div>
-    );
+        </>
+    )
 }
+
+export default Post3

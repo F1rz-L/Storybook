@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     {enforce: 'pre', ...mdx()},
     react({include: /\.(jsx|js|mdx|md|tsx|ts)$/}),
+    // require('@tailwindcss/typography'),
     tailwindcss(),
   ],
 })
